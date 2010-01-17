@@ -1,0 +1,12 @@
+li {
+    font-weight: normal;
+}
+
+li input[type=input] {
+    background-color: #FFF;
+    color: #000;
+}
+
+.nextbus_init {
+    display: none;
+}
