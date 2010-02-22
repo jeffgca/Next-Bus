@@ -9,4 +9,4 @@ if (strlen($dir) > 1) {
 }
 
 header('Content-type: application/x-javascript');
-echo "var base_url = '" . $base_url . "';";
+echo "window.nextbus_base_url = '" . $base_url . "';";

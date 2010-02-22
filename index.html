@@ -9,35 +9,41 @@
 <style type="text/css" media="screen">@import "./css/jqtouch.min.css";</style>
 <style type="text/css" media="screen">@import "./css/themes/apple/theme.min.css";</style>
 <style type="text/css" media="screen">@import "./css/nextbus.css";</style>
+
 <script type="application/x-javascript" src="./config.php"></script>
 <script type="application/x-javascript" src="./js/nextbus_ui.js"></script>
 <script type="application/x-javascript" src="./js/nextbus.js"></script>
+<script type="application/x-javascript" src="./js/jquery.json-2.2.min.js"></script>
+<script type="application/x-javascript" src="./js/jquery.cookie.js"></script>
 
 <script type="application/x-javascript">
 
 $.jQTouch({
-    icon: 'jqtouch.png',
+    //icon: 'jqtouch.png',
     statusBar: 'black-translucent',
     preloadImages: [
-        'themes/jqt/img/chevron_white.png',
-        'themes/jqt/img/bg_row_select.gif',
-        'themes/jqt/img/back_button_clicked.png',
-        'themes/jqt/img/button_clicked.png'
+        'css/themes/jqt/img/chevron.png',
+        'css/themes/jqt/img/back_button_clicked.png',
+        'css/themes/jqt/img/button_clicked.png'
         ]
 });
 
 $(document).ready(function() {
-    nextbus_ui.init();
+    nextbus.history.init();
+    nextbus.ui.init();
 });
+
 </script>
 
 </head>
 <body>
 
-<div id="ajax">
-    <div class="toolbar">
-        <h1>NextBus</h1>
+<div id="search">
+    <div id="search-toolbar" class="toolbar">
+        <h1>Search</h1>
     </div>
+
+    <ul id="error-box" class="error"></ul>
 
     <ul class="rounded">
         <li><input type="text" name="search" placeholder="Stop Number" id="stop_number"/>
@@ -49,7 +55,22 @@ $(document).ready(function() {
     </ul>
     
     <ul id="bus-data" class="rounded"></ul>
+    
+    <ul id="stop_container" class="rounded">
+        <li id="history-link"><a href="#history" onclick="nextbus.ui.show_history();">History</a></li>
+    </ul>
+    
 </div>
 
+<div id="history">
+    <div class="toolbar">
+        <h1>History</h1>
+        <a href="#search" class="back">Back</a>
+    </div>
+    
+    <ul class="rounded" id="history-list">
+        <li>No stop history saved.</li>
+    </ul>    
+</div>
 </body>
 </html>

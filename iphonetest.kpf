@@ -7,10 +7,9 @@
 
 
 
-<command cwd="%p" doNotOpenOutputWindow="0" env="" id="96876101-6b16-b646-bb61-68f620d094ed" idref="43ec2742-21ee-9347-be42-e93d5e31fd1b" insertOutput="0" keyboard_shortcut="" name="push" operateOnSelection="0" parseOutput="0" parseRegex="" runIn="command-output-window" showParsedOutputList="0">
-rsync -avz -e 'ssh -p 4242' ./ canuckistani.ca:/var/www/vhosts/m.canuckistani.ca/</command>
-<folder id="43ec2742-21ee-9347-be42-e93d5e31fd1b" idref="cffb3c13-879e-4dd2-9d65-c6a54d1e6c1f" name="commands">
-</folder>
+
+
+
 <preference-set idref="cffb3c13-879e-4dd2-9d65-c6a54d1e6c1f">
   <boolean id="import_live">1</boolean>
 </preference-set>
