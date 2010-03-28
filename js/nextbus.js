@@ -33,7 +33,7 @@ if(typeof(nextbus) == 'undefined') {
             nextbus.ui.show_results(data);
         });
     }
-    
+
 }).apply(nextbus);
 
 /**
@@ -76,8 +76,11 @@ if(typeof(nextbus.history) == 'undefined') {
 
     this.load = function() {
         var str_cookie_data = $.cookie(this.cookie_name);
-        var cookie_data = $.evalJSON(str_cookie_data);
-        if (cookie_data != null) {
+		var cookie_data;
+		if (str_cookie_data) {
+			cookie_data = $.evalJSON(str_cookie_data);
+		}
+        if (cookie_data) {
             window.nextbus_history = cookie_data;    
         }
     }
