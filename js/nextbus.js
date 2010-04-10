@@ -93,8 +93,12 @@ if(typeof(nextbus.history) == 'undefined') {
     }
     
     function _save_cookie(data) {
+		var d = new Date(2014);
         var str_data = $.toJSON(data);
-        $.cookie(nextbus.history.cookie_name, str_data);
+        $.cookie(nextbus.history.cookie_name, 
+				 str_data,
+				 {path: '/', expires: d}
+		);
     }
     
     this.get_stop_numbers = function() {
