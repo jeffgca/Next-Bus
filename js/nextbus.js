@@ -16,7 +16,7 @@ if(typeof(nextbus) == 'undefined') {
             alert('no stop number?');
             return;
         }
-        
+        $('#error-box').hide();
         $('#submit_btn').attr('disabled', true);
         
 
@@ -29,8 +29,14 @@ if(typeof(nextbus) == 'undefined') {
         $('#stop_name').html('');
         var uri = window.nextbus_base_url + 'server.php?stop=' + stop_number;
         $.getJSON(uri, {}, function(data) {
-            nextbus.history.save(data.stop_info);
-            nextbus.ui.show_results(data);
+			if (data.error) {
+				nextbus.ui.flash(data.error);
+			}
+			else {
+	            nextbus.history.save(data.stop_info);
+	            nextbus.ui.show_results(data);				
+			}
+
         });
     }
 
@@ -72,6 +78,7 @@ if(typeof(nextbus.history) == 'undefined') {
             window.nextbus_history[stop[0]] = stop[1];
         }
         _save_cookie(window.nextbus_history);
+		nextbus.ui.fill_history();
     }
 
     this.load = function() {
@@ -99,5 +106,3 @@ if(typeof(nextbus.history) == 'undefined') {
     }
 
 }).apply(nextbus.history);
-
-

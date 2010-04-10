@@ -43,12 +43,12 @@ $(document).ready(function() {
         <h1>Search</h1>
     </div>
 
-    <ul id="error-box" class="error"></ul>
-
     <ul class="rounded">
         <li><input type="text" name="search" placeholder="Stop Number" id="stop_number"/>
         <input type="submit" value="Search" id="submit_btn"/></li>
     </ul>
+
+    <ul id="error-box" class="error rounded"></ul>
     
     <ul id="stop_container" class="rounded">
         <li id="stop_name"></li>
@@ -57,7 +57,9 @@ $(document).ready(function() {
     <ul id="bus-data" class="rounded"></ul>
     
     <ul id="stop_container" class="rounded">
-        <li id="history-link"><a href="#history" onclick="nextbus.ui.show_history();">History</a></li>
+        <li id="history-link">
+			<a href="#history">History</a>
+		</li>
     </ul>
     
 </div>

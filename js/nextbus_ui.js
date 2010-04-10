@@ -18,7 +18,12 @@ if(typeof(nextbus.ui) == 'undefined') {
         $('#stop_container').hide();
         $('#submit_btn').click(function() {
             nextbus.get_bustimes();
-        });    
+        });
+
+		$('#history-link').click(function() {
+			nextbus.ui.fill_history();
+		});
+		this.fill_history();
     }
 
     this.show_results = function(data) {
@@ -41,7 +46,7 @@ if(typeof(nextbus.ui) == 'undefined') {
         $('#bus-data').show();
     }
     
-    this.show_history = function() {
+    this.fill_history = function() {
         var ii = 0;
         var list = window.nextbus_history;
         var str_history = '';
@@ -51,14 +56,15 @@ if(typeof(nextbus.ui) == 'undefined') {
             var li ='<li>' + a + '</li>';
             str_history += li;
         }
+
         if (str_history.length > 0) {
             $('#history-list').html('').append(str_history);
         }
     }
     
     this.flash = function(msg) {
-        $('#search-toolbar').after('<div class="error">' + msg + '</div>');
-        
+		$('#submit_btn').attr('disabled', false);
+        $('#error-box').html("<li>" + msg + "</li>").show();
     }
     
 }).apply(nextbus.ui);

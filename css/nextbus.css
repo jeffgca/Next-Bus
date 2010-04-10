@@ -10,3 +10,7 @@ li input[type=input] {
 .nextbus_init {
     display: none;
 }
+
+.error li {
+	color: red;
+} 
