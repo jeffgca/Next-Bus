@@ -18,8 +18,6 @@ if(typeof(nextbus) == 'undefined') {
         }
         $('#error-box').hide();
         $('#submit_btn').attr('disabled', true);
-        
-
         this.get(stop_number);
     }
 
@@ -29,14 +27,13 @@ if(typeof(nextbus) == 'undefined') {
         $('#stop_name').html('');
         var uri = window.nextbus_base_url + 'server.php?stop=' + stop_number;
         $.getJSON(uri, {}, function(data) {
-			if (data.error) {
-				nextbus.ui.flash(data.error);
-			}
-			else {
-	            nextbus.history.save(data.stop_info);
-	            nextbus.ui.show_results(data);				
-			}
-
+	    if (data.error) {
+		nextbus.ui.flash(data.error);
+	    }
+	    else {
+		nextbus.history.save(data.stop_info);
+		nextbus.ui.show_results(data);				
+	    }
         });
     }
 
@@ -51,62 +48,53 @@ if(typeof(nextbus.history) == 'undefined') {
 }
 
 (function() {
-    /* data in the cookie is stored as JSON */
     
-    this.cookie_name = "NEXTBUS_HIST";
-    
-    /**
-     * intialize the history object copy in the
-     */
+    /* they history key we're using */
+    this.storage_label = 'nextbus_history';
+    this.data = [];
     
     this.init = function() {
-        window.nextbus_history = {}
-        this.load();
+	var data;
+	data = localStorage.getItem(this.storage_label);
+	if (!data) {
+	    localStorage.setItem(this.storage_label, JSON.stringify({}));
+	    this.data = {}
+	}
+	else {
+	    this.data = JSON.parse(data);
+	}
     }
-
-    /**
-     * save a stop hash record into the window
-     */
     
     this.save = function(stop) {
-        history_length = this.get_stop_numbers().length;
-        if (history_length > 0) {
-            if (typeof(window.nextbus_history[stop[0]]) == 'undefined') {
-                window.nextbus_history[stop[0]] = stop[1];
-            }
-        } else {
-            window.nextbus_history[stop[0]] = stop[1];
-        }
-        _save_cookie(window.nextbus_history);
-		nextbus.ui.fill_history();
+	try {
+	    var history_hash = JSON.parse(localStorage.getItem(this.storage_label));
+	    
+	    if (!history_hash) {
+		history_hash = {};
+	    }
+	    
+	    history_hash[stop.number] = stop;
+	    localStorage.setItem(this.storage_label, JSON.stringify(history_hash));
+	    return true;
+	} catch (e) {
+	    return e;
+	}
     }
 
-    this.load = function() {
-        var str_cookie_data = $.cookie(this.cookie_name);
-		var cookie_data;
-		if (str_cookie_data) {
-			cookie_data = $.evalJSON(str_cookie_data);
-		}
-        if (cookie_data) {
-            window.nextbus_history = cookie_data;    
-        }
-    }
-    
-    function _save_cookie(data) {
-		var d = new Date(2014);
-        var str_data = $.toJSON(data);
-        $.cookie(nextbus.history.cookie_name, 
-				 str_data,
-				 {path: '/', expires: d}
-		);
+    this.load = function(n) {
+	var history_hash = JSON.parse(localStorage.getItem(this.storage_label));
+	return history_hash[n];
     }
     
     this.get_stop_numbers = function() {
-        var stops = [];
-        for (i in window.nextbus_history) {
-            stops.push(i);
-        }
-        return stops;
+	var history_hash = JSON.parse(localStorage.getItem(this.storage_label));
+	return _keys(history_hash);
+    }
+    
+    function _keys(o) {
+	var i = []
+	for (k in o) { i.push(k) }
+	return i;
     }
 
 }).apply(nextbus.history);
