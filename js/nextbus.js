@@ -32,7 +32,9 @@ if(typeof(nextbus) == 'undefined') {
 		nextbus.ui.flash(data.error);
 	    }
 	    else {
-		nextbus.history.save(data.stop_info);
+		nextbus.history.save(data.stop_info, function() {
+		    nextbus.ui.fill_history();
+		});
 		nextbus.ui.show_results(data);
 	    }
         });
@@ -66,7 +68,7 @@ if(typeof(nextbus.history) == 'undefined') {
 	}
     }
     
-    this.save = function(stop) {
+    this.save = function(stop, fn) {
 	try {
 	    var history_hash = $.evalJSON(localStorage.getItem(this.storage_label));
 	    
@@ -76,6 +78,10 @@ if(typeof(nextbus.history) == 'undefined') {
 	    
 	    history_hash[stop.number] = stop;
 	    localStorage.setItem(this.storage_label, $.toJSON(history_hash));
+	    
+	    if (typeof(fn) === 'function') {
+		fn.call();
+	    }
 	    return true;
 	} catch (e) {
 	    return e;
@@ -88,13 +94,9 @@ if(typeof(nextbus.history) == 'undefined') {
     }
     
     this.loadAll = function() {
-	try {
-	    var tmp = localStorage.getItem(this.storage_label);
-	    console.log(tmp);
-	    return $.evalJSON(tmp);
-	} catch(e) {
-	    return e;
-	}
+	var tmp = localStorage.getItem(this.storage_label);
+	console.log(tmp);
+	return $.evalJSON(tmp);
     }
     
     this.get_stop_numbers = function() {

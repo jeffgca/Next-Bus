@@ -68,7 +68,7 @@ if(typeof(nextbus.ui) == 'undefined') {
     }
     
     this.flash = function(msg) {
-		$('#submit_btn').attr('disabled', false);
+	$('#submit_btn').attr('disabled', false);
         $('#error-box').html("<li>" + msg + "</li>").show();
     }
     
