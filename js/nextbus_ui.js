@@ -28,7 +28,7 @@ if(typeof(nextbus.ui) == 'undefined') {
 
     this.show_results = function(data) {
         if (typeof(data.error) == 'undefined') {
-            var stop_name = data.stop_info.join(' ');
+            var stop_name = data.stop_info.number + ' ' + data.stop_info.name;
             $('#stop_name').html(stop_name);
             
             for (i in data.data) {
@@ -48,11 +48,12 @@ if(typeof(nextbus.ui) == 'undefined') {
     
     this.fill_history = function() {
         var ii = 0;
-        var list = window.nextbus_history;
+        var list = nextbus.history.loadAll();
         var str_history = '';
         for (var i in list) {
+	    console.log(list[i]);
             var a = '<a href="#search" onclick="nextbus.get('+ i +');">'
-                + i + ' ' + list[i] + '</a>';
+                + i + ' ' + list[i].name + '</a>';
             var li ='<li>' + a + '</li>';
             str_history += li;
         }
