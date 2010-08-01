@@ -20,23 +20,28 @@ if(typeof(nextbus.ui) == 'undefined') {
             nextbus.get_bustimes();
         });
 
-		$('#history-link').click(function() {
-			nextbus.ui.fill_history();
-		});
-		this.fill_history();
+	$('#history-link').click(function() {
+	    nextbus.ui.fill_history();
+	});
+	this.fill_history();
     }
 
     this.show_results = function(data) {
         if (typeof(data.error) == 'undefined') {
             var stop_name = data.stop_info.number + ' ' + data.stop_info.name;
-            $('#stop_name').html(stop_name);
             
             for (i in data.data) {
                 var time_str = data.data[i].times.join(' ');
                 label = 'Route: ' + data.data[i].routeName + '<br/>Times: ' + time_str;
                 $('#bus-data').append('<li>' + label + '</li>');
             }
+
+	    $('#search-form').show(function() {
+		$('#stop_name').html(stop_name);
+		$('#stop_number').val();
+	    });
             $('#stop_container').show();
+	    
         }
         else {
             $('#bus-data').html('<li>Error: ' + data.error + '</li>');
