@@ -58,24 +58,24 @@ if(typeof(nextbus.history) == 'undefined') {
 	var data;
 	data = localStorage.getItem(this.storage_label);
 	if (!data) {
-	    localStorage.setItem(this.storage_label, JSON.stringify({}));
+	    localStorage.setItem(this.storage_label, $.toJSON({}));
 	    this.data = {}
 	}
 	else {
-	    this.data = JSON.parse(data);
+	    this.data = $.evalJSON(data);
 	}
     }
     
     this.save = function(stop) {
 	try {
-	    var history_hash = JSON.parse(localStorage.getItem(this.storage_label));
+	    var history_hash = $.evalJSON(localStorage.getItem(this.storage_label));
 	    
 	    if (!history_hash) {
 		history_hash = {};
 	    }
 	    
 	    history_hash[stop.number] = stop;
-	    localStorage.setItem(this.storage_label, JSON.stringify(history_hash));
+	    localStorage.setItem(this.storage_label, $.toJSON(history_hash));
 	    return true;
 	} catch (e) {
 	    return e;
@@ -83,20 +83,22 @@ if(typeof(nextbus.history) == 'undefined') {
     }
 
     this.load = function(n) {
-	var history_hash = JSON.parse(localStorage.getItem(this.storage_label));
+	var history_hash = this.loadAll();
 	return history_hash[n];
     }
     
     this.loadAll = function() {
 	try {
-	    return JSON.parse(localStorage.getItem(this.storage_label));
+	    var tmp = localStorage.getItem(this.storage_label);
+	    console.log(tmp);
+	    return $.evalJSON(tmp);
 	} catch(e) {
 	    return e;
 	}
     }
     
     this.get_stop_numbers = function() {
-	var history_hash = JSON.parse(localStorage.getItem(this.storage_label));
+	var history_hash = this.loadAll();
 	return _keys(history_hash);
     }
     
