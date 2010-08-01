@@ -2,24 +2,30 @@
 
 require_once('./http_handler.inc.php');
 
+define('DEBUG', TRUE);
+define('LOGFILE', '/tmp/php_debug.log');
+
+
+
 class TranslinkProxy extends HTTPHandler {
     
-    function __construct() {
+    public function __construct() {
         $endpoint = 'http://m.translink.ca/api';
         parent::__construct($endpoint);
     }
     
-    function _get_stop_info($number) {
+    private function _get_stop_info($number) {
         $uri = '/stops/?q=' . $number;
         try {
             $raw = $this->Get($uri);
+            $this->_log($raw);
             return $raw->data;
         } catch (Exception $e) {
             return array('error' => $e->getMessage());
         }
     }
     
-    function getBusTimes($number) {
+    public function getBusTimes($number) {
         //$uri = 'http://m.translink.ca/stop/';
         $info = $this->_get_stop_info($number);
         
@@ -31,22 +37,14 @@ class TranslinkProxy extends HTTPHandler {
         try {
             $raw = $this->Get($uri);
             return json_encode((object) array(
-                'stop_info' => $info[0],
+                'stop_info' => array('number' => $info[0][0], 'name' => $info[0][1]),
                 'data' => $raw->data,
             ));
         /* @var $e Exception */
         } catch (Exception $e) {
             return json_encode(array('error' => $e->getMessage()));
         }
-    }
-    
-    function pp($data) {
-        if (func_num_args() > 1) {
-            $data = func_get_args();
-        }
-        return "<pre>".print_r($data, 1)."</pre>";
-    }
-    
+    }    
 }
 
 if (isset($_GET['stop'])) {
