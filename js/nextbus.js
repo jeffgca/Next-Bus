@@ -22,9 +22,10 @@ if(typeof(nextbus) == 'undefined') {
     }
 
     this.get = function(stop_number) {
+	$('#stop_name').html('');
+	$('#search-form').hide();
         $('#bus-data').hide().html('');
         $('#stop_container').hide();
-        $('#stop_name').html('');
         var uri = window.nextbus_base_url + 'server.php?stop=' + stop_number;
         $.getJSON(uri, {}, function(data) {
 	    if (data.error) {
@@ -32,7 +33,7 @@ if(typeof(nextbus) == 'undefined') {
 	    }
 	    else {
 		nextbus.history.save(data.stop_info);
-		nextbus.ui.show_results(data);				
+		nextbus.ui.show_results(data);
 	    }
         });
     }
