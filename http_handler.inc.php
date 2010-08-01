@@ -10,8 +10,7 @@ class HTTPHandler {
     * __construct()
     * @param $endpoint
     */
-    
-    function __construct($endpoint) {
+    public  function __construct($endpoint) {
         $this->endpoint = $endpoint;
     }
     
@@ -19,8 +18,7 @@ class HTTPHandler {
      * Get: perform an HTTP GET operation using the currently set endpoint as
      * the base url
     */
-    
-    function Get($uri=FALSE) { 
+    public function Get($uri=FALSE) { 
         if (!$uri) {
             $url = $this->endpoint;
         } else {
@@ -50,7 +48,7 @@ class HTTPHandler {
         return $this->_parse_resp((object) $out);
     }
     
-    function Post($uri, $data) {
+    public function Post($uri, $data) {
         $fields = http_build_query($data, '', '&');
         $fields_count = count($data);
         $success = FALSE;
@@ -85,7 +83,6 @@ class HTTPHandler {
     /**
      * get a nice explanation for common HTTP  response codes
      */
-    
     private function _get_http_response($code) {
         // guidance from here:
         // http://stackoverflow.com/questions/408405/easy-way-to-test-a-url-for-404-in-php
@@ -119,14 +116,14 @@ class HTTPHandler {
         return $resp_status;
     }   
     
-    function _get_url($uri) {
+    protected function _get_url($uri) {
         if (!substr($uri, 0,1) === '/') {
             $uri = '/' . $uri;
         }
         return $this->endpoint . $uri;
     }
     
-    function _parse_resp($resp) {
+    protected function _parse_resp($resp) {
         if ($resp->success) {
             // if we were going to support other response formats, this is where we would do it.
             $resp->data = json_decode($resp->raw);
@@ -136,11 +133,17 @@ class HTTPHandler {
         }
     }
     
-    private function _pp($data) {
+    protected function pp($data) {
         if (func_num_args() > 1) {
         $data = func_get_args();
         }
         return "<pre>".print_r($data, 1)."</pre>";
+    }
+    
+    function _log($data) {
+        if (DEBUG) {
+            @file_put_contents(LOGFILE, print_r($data, 1));
+        }
     }
     
 }
