@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>NextBus</title>
+
+<script src="./js/jquery-1.3.2.min.js" type="application/x-javascript"></script>
+<script src="./js/jqtouch/jqtouch.min.js" type="application/x-javascript" charset="utf-8"></script>
+<style type="text/css" media="screen">@import "./css/jqtouch.min.css";</style>
+<style type="text/css" media="screen">@import "./css/themes/apple/theme.min.css";</style>
+<style type="text/css" media="screen">@import "./css/nextbus.css";</style>
+
+<script type="application/x-javascript" src="./config.php"></script>
+<script type="application/x-javascript" src="./js/nextbus_ui.js"></script>
+<script type="application/x-javascript" src="./js/nextbus.js"></script>
+<script type="application/x-javascript" src="./js/jquery.json.js"></script>
+<script type="application/x-javascript" src="./js/jquery.cookie.js"></script>
+
+<script type="application/x-javascript">
+
+$.jQTouch({
+    //icon: 'jqtouch.png',
+    statusBar: 'black-translucent',
+    preloadImages: [
+        'css/themes/jqt/img/chevron.png',
+        'css/themes/jqt/img/back_button_clicked.png',
+        'css/themes/jqt/img/button_clicked.png'
+        ]
+});
+
+$(document).ready(function() {
+    nextbus.history.init();
+    nextbus.ui.init();
+});
+
+</script>
+
+</head>
+<body>
+
+<div id="search">
+    <div id="search-toolbar" class="toolbar">
+        <h1>Search</h1>
+    </div>
+
+    <ul class="rounded" id="search-form">
+	    <li><input type="text" name="search" placeholder="Stop Number" id="stop_number"/>
+	    <input type="submit" value="Search" id="submit_btn"/></li>
+	<!--<p id="busy">-->
+	<!--    <li><input type="text" name="search" placeholder="Stop Number" id="stop_number"/>-->
+	<!--    <input type="submit" value="Search" id="submit_btn"/></li>-->
+	<!--</p>-->
+    </ul>
+    
+    <ul class="rounded">
+        <li class="links">
+            <a href="#history">History</a>
+	    <a href="#favourites">Favourites</a>
+	</li>
+    </ul>
+    
+</div>
+
+<div id="results">
+    <div id="results-toolbar" class="toolbar">
+        <h1>Search <span id="nbr"></span></h1>
+    </div>
+
+    <ul id="error-box" class="error rounded"></ul>
+    
+    <ul id="stop_container" class="rounded">
+        <li id="stop_name"></li>
+    </ul>
+    
+    <ul id="bus-data" class="rounded"></ul>
+    
+    
+    <ul class="rounded">
+        <li class="links">
+            <a href="#search">Search</a>
+            <a href="#history">History</a>
+	    <a href="#favourites">Favourites</a>
+	</li>
+    </ul>
+</div>
+
+<div id="history">
+    <div class="toolbar">
+        <h1>History</h1>
+        <a href="#search" class="back">Back</a>
+    </div>
+    
+    <ul class="rounded" id="history-list">
+        <li>No stop history saved.</li>
+    </ul>
+    
+    <ul class="rounded">
+        <li class="links">
+            <a href="#search">Search</a>
+	    <a href="#favourites">Favourites</a>
+	</li>
+    </ul>
+    
+</div>
+
+<div id="favourites">
+    
+    <ul class="rounded" id="favourites-list">
+        <li>No favourites set.</li>
+    </ul>
+    
+    <ul class="rounded">
+        <li class="links">
+            <a href="#search">Search</a>
+	    <a href="#history">History</a>
+	</li>
+    </ul>
+</div>
+
+</body>
+</html>
