@@ -56,7 +56,6 @@ if(typeof(nextbus.ui) == 'undefined') {
         var list = nextbus.history.loadAll();
         var str_history = '';
         for (var i in list) {
-	    console.log(list[i]);
             var a = '<a href="#search" onclick="nextbus.get('+ i +');">'
                 + i + ' ' + list[i].name + '</a>';
             var li ='<li>' + a + '</li>';
