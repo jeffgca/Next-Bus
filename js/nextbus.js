@@ -86,6 +86,14 @@ if(typeof(nextbus.history) == 'undefined') {
 	return history_hash[n];
     }
     
+    this.loadAll = function() {
+	try {
+	    return JSON.parse(localStorage.getItem(this.storage_label));
+	} catch(e) {
+	    return e;
+	}
+    }
+    
     this.get_stop_numbers = function() {
 	var history_hash = JSON.parse(localStorage.getItem(this.storage_label));
 	return _keys(history_hash);
